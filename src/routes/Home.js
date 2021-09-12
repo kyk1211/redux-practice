@@ -18,13 +18,11 @@ function Home({ toDos, addToDo }) {
     <>
       <h1>To Do</h1>
       <form onSubmit={onSubmit}>
-        <input type="text" value={text} onChange={onChange}/>
+        <input type="text" value={text} required onChange={onChange}/>
         <button>Add</button>
       </form>
       <ul>
-        {toDos.map(toDo => (
-          <ToDo {...toDo} key={toDo.id} />
-        ))}
+        {toDos?.map(toDo => <ToDo {...toDo} key={toDo.id} />)}
       </ul>
     </>
   );
@@ -37,7 +35,6 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     addToDo: (text) => dispatch(actionCreators.addToDo(text)),
-    
   };
 }
 
