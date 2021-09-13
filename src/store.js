@@ -3,13 +3,6 @@ import { createStore } from 'redux';
 const ADD = 'ADD';
 const DELETE = 'DELETE';
 
-const initialState = () => {
-  if (localStorage.length === 0) {
-    return [];
-  }
-  return JSON.parse(localStorage.getItem('toDos'));
-}
-
 //action
 const addToDo = (text) => {
   return {
@@ -25,10 +18,20 @@ const delToDo = (id) => {
   };
 };
 
+const initialState = () => {
+  if (localStorage.length === 0) {
+    return [];
+  }
+  return JSON.parse(localStorage.getItem('toDos'));
+}
+
 const reducer = (state=initialState(), action) => {
   switch (action.type) {
     case ADD:
-      return [{ text: action.text, id: Date.now() }, ...state];
+      const addToDosLocal = [{ text: action.text, id: Date.now() }, ...state];
+      localStorage.setItem('toDos', JSON.stringify(addToDosLocal));
+      state = JSON.parse(localStorage.getItem('toDos'));
+      return state;
     case DELETE:
       return state.filter(toDo => toDo.id !== action.id);
     default:

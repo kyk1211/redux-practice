@@ -22,8 +22,9 @@ function Home({ toDos, addToDo }) {
         <button>Add</button>
       </form>
       <ul>
-        {toDos?.map(toDo => <ToDo {...toDo} key={toDo.id} />)}
+        {toDos.map(toDo => <ToDo {...toDo} key={toDo.id} />)}
       </ul>
+      <button onClick={() => localStorage.clear()}>RESET</button>
     </>
   );
 }
