@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
 import { compose } from "redux";
-import { actionCreators } from "../store";
+import { remove } from "../store";
 
 function Detail({ toDo, onBtnClick }) {
   return (
@@ -35,7 +35,7 @@ function mapDispatchToProps(dispatch, ownProps) {
   } = ownProps;
   return {
     onBtnClick: () => {
-      dispatch(actionCreators.delToDo(parseInt(id)));
+      dispatch(remove(parseInt(id)));
     }
   };
 }
