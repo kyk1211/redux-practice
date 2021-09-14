@@ -2,6 +2,7 @@ import { createStore } from 'redux';
 
 const ADD = 'ADD';
 const DELETE = 'DELETE';
+const RESET = 'RESET';
 
 //action
 const addToDo = (text) => {
@@ -18,6 +19,12 @@ const delToDo = (id) => {
   };
 };
 
+const resetToDo = () => {
+  return {
+    type: RESET,
+  };
+};
+
 const initialState = () => {
   if (localStorage.length === 0) {
     return [];
@@ -30,10 +37,15 @@ const reducer = (state=initialState(), action) => {
     case ADD:
       const addToDosLocal = [{ text: action.text, id: Date.now() }, ...state];
       localStorage.setItem('toDos', JSON.stringify(addToDosLocal));
-      state = JSON.parse(localStorage.getItem('toDos'));
-      return state;
+      return addToDosLocal;
     case DELETE:
-      return state.filter(toDo => toDo.id !== action.id);
+      const delToDosLocal = state.filter(toDo => toDo.id !== action.id);
+      localStorage.setItem('toDos', JSON.stringify(delToDosLocal)); 
+      return delToDosLocal;
+    case RESET:
+      localStorage.clear();
+      state = [];
+      return state;
     default:
       return state;
   }
@@ -43,7 +55,8 @@ const store = createStore(reducer);
 
 export const actionCreators = {
   addToDo,
-  delToDo
+  delToDo,
+  resetToDo
 };
 
 export default store;

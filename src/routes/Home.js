@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import ToDo from '../components/ToDo';
 import { actionCreators } from '../store';
 
-function Home({ toDos, addToDo }) {
+function Home({ toDos, addToDo, resetToDo }) {
   const [text, setText] = useState("");
   function onChange(e) {
     setText(e.target.value);
@@ -24,7 +24,7 @@ function Home({ toDos, addToDo }) {
       <ul>
         {toDos.map(toDo => <ToDo {...toDo} key={toDo.id} />)}
       </ul>
-      <button onClick={() => localStorage.clear()}>RESET</button>
+      <button onClick={resetToDo}>RESET</button>
     </>
   );
 }
@@ -36,6 +36,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     addToDo: (text) => dispatch(actionCreators.addToDo(text)),
+    resetToDo: () => dispatch(actionCreators.resetToDo())
   };
 }
 
