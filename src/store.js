@@ -1,5 +1,4 @@
-import { createStore } from 'redux';
-import { createAction, createReducer } from '@reduxjs/toolkit';
+import { configureStore, createAction, createReducer } from '@reduxjs/toolkit';
 
 //action
 const addToDo = createAction("ADD");
@@ -29,8 +28,8 @@ const reducer = createReducer(initialState(), {
     return [];
   }
 });
-
-const store = createStore(reducer);
+// configureStore: can use Redux Developer Tools in browser
+const store = configureStore({ reducer });
 
 export const actionCreators = {
   addToDo,
